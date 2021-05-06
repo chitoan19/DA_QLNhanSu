@@ -1,0 +1,108 @@
+<h1 class="card-title text-center py-3 title-list bg-title">Quản lý tiền lương</h1>
+<div class="container border">
+  <br>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <mat-form-field style="font-size: 18px;">
+        <mat-select placeholder="Nhân viên" #singleSelect (selectionChange)="filter($event)">
+          <mat-option value="">Tất cả</mat-option>
+          <mat-option *ngFor="let nv of this.listNhanVien" [value]="nv.id">
+            {{nv.ho_ten}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="card ">
+  <div class="card-body list-data">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Nhân viên</th>
+          <th scope="col">Lương cơ bản</th>
+          <th scope="col">Phụ cấp tháng</th>
+          <th scope="col">Mức lương làm thêm(/giờ)</th>
+          <th scope="col"></th>
+        </tr>
+      <tbody>
+        <tr *ngFor="let i=index;let l of listLuong | paginate:{itemsPerPage: perPage, currentPage: p, totalItems: total}">
+          <td>{{i+1}}</td>
+          <td>{{this.objectNhanVien[l.nhan_vien_id]}}</td>
+          <td>{{formatMoney(l.luong_co_ban)}}</td>
+          <td>{{formatMoney(l.phu_cap)}}</td>
+          <td>{{formatMoney(l.muc_luong_lam_them_gio)}}</td>
+          <td style="width: fit-content !important;" class="action"><button class="btn btn-outline-info" (click) = "detail(detailForm, l)"><i class="fas fa-pencil-alt"></i></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<nav aria-label="Page navigation example">
+  <pagination-controls
+  (pageChange)="pageChanged(p = $event)"
+  (pageBoundsCorrection)="pageChanged($event)"
+  previousLabel="Trước"
+  nextLabel="Sau"
+  >
+  </pagination-controls>
+</nav>
+<ng-template #detailForm let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title">Cập nhật</h2>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6" style="font-size: 18px !important;">
+        <b>Nhân viên</b>: <i>{{this.objectNhanVien[idnvClicked]}}</i>
+      </div>
+    </div>
+    <br>
+    <form [formGroup]="editForm">
+      <div class="row">
+        <input type="text" hidden formControlName="id" id="id">
+        <input type="text" hidden formControlName="nhan_vien_id" id="nhan_vien_id">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <mat-form-field class="fullwidth"  appearance="fill">
+            <mat-label style="font-size: 18px !important;"><b>Lương cơ bản</b></mat-label>
+            <input  matInput formControlName="luong_co_ban" id="luong_co_ban" type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <mat-form-field class="fullwidth" appearance="fill">
+            <mat-label style="font-size: 18px !important;"><b>Phụ cấp tháng</b></mat-label>
+            <input  matInput formControlName="phu_cap" id="phu_cap" type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <mat-form-field class="fullwidth" appearance="fill">
+            <mat-label style="font-size: 18px !important;"><b>Mức lương làm thêm(/giờ)</b></mat-label>
+            <input  matInput formControlName="muc_luong_lam_them_gio" id="muc_luong_lam_them_gio" type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click) = "submitEdit()">Lưu</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Hủy</button>
+  </div>
+</ng-template>
+
+

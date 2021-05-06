@@ -1,0 +1,129 @@
+<h1 class="card-title text-center py-3 title-list bg-title">Nhập hồ sơ nhân viên</h1>
+
+<form class="form-search" (ngSubmit)="obSubmit()">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="hoten">Họ và Tên</label>
+        <input type="text" [(ngModel)]="nv.ho_ten" #hoten="ngModel"  class="form-control" id="hoten" required
+        name="hoten" >
+      </div>
+      <div *ngIf="hoten.invalid && (hoten.dirty || hoten.touched)"
+      class="alert alert-danger">
+        <div *ngIf="hoten.errors.required">
+          Name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="quequan">Quê quán</label>
+        <input type="text"  [(ngModel)]="nv.que_quan" #quequan="ngModel"  class="form-control" id="quequan" required
+        name="quequan" >
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="birth">Ngày sinh</label>
+        <input type="date"  [(ngModel)]="nv.ngay_sinh" class="form-control" id="birth" required
+        name="birth">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="chuc_vu">Vị trí</label>
+        <input type="text" [(ngModel)]="nv.chuc_vu"  #chuc_vu="ngModel"  class="form-control" id="chuc_vu" required
+        name="chuc_vu" >
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="gioitinh">Giới tính</label>
+        <select [(ngModel)]="nv.gioi_tinh" #gioitinh="ngModel" class="custom-select" id="gioitinh" name="gioitinh" required>
+          <option value="0">Nữ</option>
+          <option value="1">Nam</option>
+        </select>
+
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="hocvan">Học vấn</label>
+        <input type="text" [(ngModel)]="nv.trinh_do_van_hoa"  class="form-control" id="hocvan"
+        name="hocvan" >
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="sdt">SĐT</label>
+        <input type="text" [(ngModel)]="nv.sdt" #sdt="ngModel"  class="form-control" id="sdt" required
+        name="sdt" >
+      </div>
+
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="cmnd">CMND</label>
+        <input type="text" [(ngModel)]="nv.cmnd" #cmnd="ngModel" class="form-control" id="cmnd" required
+        name="cmnd" >
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="diachi">Địa chỉ hiện tại</label>
+        <input type="text" [(ngModel)]="nv.dia_chi_hien_tai"  class="form-control" id="diachi" required
+        name="diachi" >
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" [(ngModel)]="nv.email" #email="ngModel" class="form-control" id="email" required
+        name="email" >
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="phongban">Phòng ban</label>
+        <select [(ngModel)]="nv.phong_ban_id" class="custom-select" id="phongban" name="phongban">
+          <option value="2" selected>Phòng hành chính nhân sự</option>
+          <option value="3">Phòng hệ thống</option>
+          <option value="4">Phòng kinh doanh</option>
+          <option value="5">Phòng phát triển phần mềm</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="namkn">Số năm kinh nghiệm</label>
+        <input type="text" [(ngModel)]="nv.so_nam_kinh_nghiem"  class="form-control" id="namkn"
+        name="namkn" >
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
+  </div>
+  <div class="row">
+    <div class="col-md-4 text-right">
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i>&nbsp;Thêm mới</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <button class="btn btn-success" (click)="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Quay lại</button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,156 @@
+
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper">
+        <!-- ============================================================== -->
+        <!-- navbar -->
+        <!-- ============================================================== -->
+        <div class="dashboard-header">
+            <nav class="navbar navbar-expand-lg bg-white fixed-top">
+                <a class="navbar-brand" href="/dashboard">FintechViet</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-right-top">
+                        <li class="nav-item dropdown nav-user">
+                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="./assets/static/images/user.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                <div class="nav-user-info">
+                                    <h5 class="mb-0 text-white nav-user-name">{{this.nv.ho_ten}}</h5>
+                                    <span class="status"></span><span class="ml-2">Online</span>
+                                </div>
+                                <a class="dropdown-item" routerLink="/dashboard/info/{{this.nv.id}}"><i class="fas fa-user mr-2"></i>Thông tin cá nhân</a>
+                                <a class="dropdown-item" routerLink="/dashboard/myaccount/{{this.tk.id}}"><i class="fas fa-user-circle"></i>&nbsp;Thông tin tài khoản</a>
+                                <a class="dropdown-item" (click)="logout()" href="#"><i class="fas fa-power-off mr-2"></i>Đăng xuất</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end navbar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- left sidebar -->
+        <!-- ============================================================== -->
+        <div class="nav-left-sidebar sidebar-dark">
+            <div class="menu-list">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav flex-column">
+                            <li class="nav-divider">
+                              Dashboard
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/dashboard/home" data-toggle="collapse" id="overall" ><i class="fas fa-home"></i>Trang chủ</a>
+                            </li>
+                            <li class="nav-item" *ngIf="this.tk.quyen > 0">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fas fa-tasks"></i>Quản lý nhân viên</a>
+                                <div id="submenu-2" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" routerLink="/dashboard/nhan-vien"><i class="fas fa-list"></i>Danh sách nhân viên <span class="badge badge-secondary">New</span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" routerLink="/dashboard/nhan-vien/add"><i class="fas fa-id-badge"></i>Nhập hồ sơ nhân viên</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item" *ngIf="this.tk.quyen > 0">
+                              <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-users"></i>Quản lý tài khoản</a>
+                              <div id="submenu-3" class="collapse submenu" style="">
+                                  <ul class="nav flex-column">
+                                      <li class="nav-item">
+                                          <a class="nav-link" routerLink="/dashboard/tai-khoan"><i class="fas fa-list"></i>Tài khoản trong hệ thống <span class="badge badge-secondary">New</span></a>
+                                      </li>
+
+                                      <!-- <li class="nav-item">
+                                        <a class="nav-link" routerLink="/dashboard/account/add"><i class="fas fa-user"></i>Tạo tài khoản</a>
+                                      </li> -->
+                                  </ul>
+                              </div>
+                          </li>
+                          <li class="nav-item" *ngIf="this.tk.quyen > 0">
+                              <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fas fa-fw fa-chart-pie"></i>Quản lý chấm công</a>
+                              <div id="submenu-4" class="collapse submenu" style="">
+                                  <ul class="nav flex-column">
+                                      <li class="nav-item">
+                                          <a class="nav-link" routerLink="/dashboard/cham-cong" ><i class="far fa-calendar-alt"></i>&nbsp;Danh sách chấm công</a>
+                                      </li>
+                                      <li class="nav-item">
+                                        <a class="nav-link" routerLink="/dashboard/thong-ke" ><i class="fas fa-calculator"></i>&nbsp;Thống kê</a>
+                                    </li>
+                                  </ul>
+                              </div>
+                          </li>
+                          <li class="nav-item" *ngIf="this.tk.quyen > 0">
+                            <div id="submenu-5">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" routerLink="/dashboard/luong"><i class="fas fa-dollar-sign"></i>&nbsp;Quản lý lương</a>
+                                    </li>
+                                </ul>
+                            </div>
+                          </li>
+                          <li class="nav-item">
+                            <div id="submenu-6">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" routerLink="/dashboard/location"><i class="fas fa-map-marker-alt"></i>&nbsp;Vị trí</a>
+                                    </li>
+                                </ul>
+                            </div>
+                          </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end left sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content ">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <div class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+                             <b>Công ty cổ phần  <a href="http://fintechviet.vn/">FintechViet</a></b>.
+                             Developed by Nguyễn Chí Toàn - KTPM1-K12-Haui
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- end wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper  -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+    <!-- jquery 3.3.1 -->
+<simple-notifications></simple-notifications>

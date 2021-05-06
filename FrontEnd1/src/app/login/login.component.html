@@ -1,0 +1,33 @@
+<div class="splash-container">
+  <div class="card ">
+    <div class="card-header text-center"><span class="navbar-brand">FintechViet</span></div>
+      <div class="card-body">
+          <form>
+            <mat-form-field class="fullwidth" appearance="fill">
+              <mat-label><b>Tài khoản</b></mat-label>
+              <input  matInput [(ngModel)]="authRequest.ten_dang_nhap" name="ten_dang_nhap" id="ten_dang_nhap" type="text" />
+            </mat-form-field>
+            <mat-form-field class="fullwidth" appearance="fill">
+              <mat-label><b>Mật khẩu</b></mat-label>
+              <input  matInput [(ngModel)]="authRequest.mat_khau" name="mat_khau" id="password" [type]="hide ? 'password' : 'text'" />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+              <button id="btn-login" type="submit" (click)="onSubmit()" class="btn btn-primary btn-lg btn-block"><i class="fas fa-sign-in-alt"></i>&nbsp;Đăng nhập</button>
+          </form>
+      </div>
+      <div class="text-danger text-center" *ngIf="this.error"><i>{{this.error}}</i></div>
+      <div class="card-footer bg-white p-0  ">
+        <div class="card-footer-item card-footer-item-bordered">
+            <a href="#" class="footer-link">Quên mật khẩu?</a>
+        </div>
+      </div>
+  </div>
+</div>

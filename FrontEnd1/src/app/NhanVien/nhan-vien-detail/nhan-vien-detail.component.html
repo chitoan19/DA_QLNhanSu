@@ -1,0 +1,567 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <button (click)="view(1)" class="btn btn-primary" title="Thông tin cơ bản"><i class="fas fa-id-card"></i></button>&nbsp;
+      <button (click)="view(2)" class="btn btn-primary" title="Thông tin gia đình"><i class="fas fa-home"></i></button>&nbsp;
+      <button (click)="view(3)" class="btn btn-primary" title="Quá trình đào tạo"><i class="fas fa-graduation-cap"></i></button>&nbsp;
+      <button (click)="view(4)" class="btn btn-primary" title="Quá trình công tác"><i class="far fa-building"></i></button>&nbsp;
+      <button (click)="view(5)" class="btn btn-primary" title="Bằng cấp chứng chỉ"><i class="fas fa-certificate"></i></button>
+    </ul>
+  </div>
+</nav>
+<br>
+<h3 class="card-title text-left" >Nhân viên: {{this.nv.ho_ten}} - <u><i>{{this.title}}</i></u></h3>
+<!-- thông tin cơ bản -->
+<div class="row" *ngIf="this.func==1 && isUpload">
+  <div class="col-md-3">
+    <input class="form-control" (change)="onFileChanged($event)" type="file" accept="image/*">
+  </div>
+  <div class="col-md-6" >
+      <input [disabled]="this.selectedImg == null" class="btn btn-primary" type="button" (click)="uploadAvatar()"  value="Lưu">
+  </div>
+</div>
+<div class="row" *ngIf="this.func==1">
+  <div class="col-md-6">
+    <img class="img-thumbnail" [src]="this.avatar" style="width:250px; height:250px">
+  </div>
+  <br><br>
+</div>
+<form *ngIf="this.func==1"  (ngSubmit)="onSubmit(1)">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="hoten">Họ và Tên</label>
+        <input type="text" [disabled]="!isEdit" [(ngModel)]="nv.ho_ten" #hoten="ngModel"  class="form-control" id="hoten" required
+        name="hoten" >
+      </div>
+      <div *ngIf="hoten.invalid && (hoten.dirty || hoten.touched)"
+      class="alert alert-danger">
+        <div *ngIf="hoten.errors.required">
+          Name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="quequan">Quê quán</label>
+        <input type="text" [disabled]="!isEdit"  [(ngModel)]="nv.que_quan" #quequan="ngModel"  class="form-control" id="quequan" required
+        name="quequan" >
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="birth">Ngày sinh</label>
+        <input *ngIf="isEdit == true" type="date"  [(ngModel)]="nv.ngay_sinh" class="form-control" id="birth" required
+        name="birth">
+        <input *ngIf="isEdit == false" type="text" disabled [value]="nv.ngay_sinh | date:'dd/MM/yyyy'" class="form-control" id="birth" required
+        name="birth">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="chuc_vu">Chức vụ</label>
+        <input type="text" [disabled]="!isEdit" [(ngModel)]="nv.chuc_vu"  #chuc_vu="ngModel"  class="form-control" id="chuc_vu" required
+        name="chuc_vu" >
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div  class="form-group">
+        <label for="gioitinh">Giới tính</label>
+        <select *ngIf="isEdit == true" [(ngModel)]="nv.gioi_tinh" class="custom-select" id="gioi_tinh" name="gioi_tinh" required>
+          <option [ngValue]="0">Nữ</option>
+          <option [ngValue]="1">Nam</option>
+        </select>
+        <input *ngIf="isEdit == false" type="text" disabled [value]="gioitinh"  class="form-control" id="gioitinh" name="gioitinh" required>
+      </div>
+
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="hocvan">Học vấn</label>
+        <input type="text" [disabled]="!isEdit" [(ngModel)]="nv.trinh_do_van_hoa"  class="form-control" id="hocvan"
+        name="hocvan" >
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="sdt">SĐT</label>
+        <input type="text" [disabled]="!isEdit" [(ngModel)]="nv.sdt" #sdt="ngModel"  class="form-control" id="sdt" required
+        name="sdt" >
+      </div>
+
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="cmnd">CMND</label>
+        <input type="text" [disabled]="!isEdit" [(ngModel)]="nv.cmnd" #cmnd="ngModel" class="form-control" id="cmnd" required
+        name="cmnd" >
+
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="diachi">Địa chỉ hiện tại</label>
+        <input type="text" [disabled]="!isEdit" [(ngModel)]="nv.dia_chi_hien_tai"  class="form-control" id="diachi" required
+        name="diachi" >
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" [disabled]="!isEdit" [(ngModel)]="nv.email" #email="ngModel" class="form-control" id="email" required
+        name="email" >
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="phongban">Phòng ban</label>
+        <select *ngIf="isEdit == true" [(ngModel)]="nv.phong_ban_id" class="custom-select" id="phongban" name="phongban">
+          <option value="1">Phòng giám đốc</option>
+          <option value="2">Phòng hành chính nhân sự</option>
+          <option value="3">Phòng hệ thống</option>
+          <option value="4">Phòng kinh doanh</option>
+          <option value="5">Phòng phát triển phần mềm</option>
+        </select>
+        <input *ngIf="isEdit == false" [value]="ten_phong_ban" class="form-control" disabled>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="namkn">Số năm kinh nghiệm</label>
+        <input type="text" [disabled]="!isEdit" [(ngModel)]="nv.so_nam_kinh_nghiem"  class="form-control" id="namkn"
+        name="namkn" >
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class="form-group text-right">
+        <button *ngIf="!isEdit"class="btn btn-info" style="color: black;" (click)="enableEdit()"><i class="fas fa-pencil-alt"></i>&nbsp;Cập nhật</button>
+        <button *ngIf="isEdit"class="btn btn-danger" (click)="cancleEdit()"><i class="far fa-times-circle"></i>&nbsp;Hủy</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 text-right">
+      <div class="form-group">
+        <button *ngIf="isEdit" type="submit" class="btn btn-success"><i class="fas fa-user-plus"></i>&nbsp;Lưu</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <button class="btn btn-primary" (click)="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Quay lại</button>
+      </div>
+
+    </div>
+  </div>
+</form>
+<!-- thông tin gia đình -->
+<div *ngIf="this.func==2"  >
+  <button (click)="create(formCreate, 2)" class="btn btn-success"><i class="fas fa-user-plus">&nbsp;Thêm thông tin</i></button><br>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Họ và tên</th>
+        <th scope="col">Quan hệ</th>
+        <th scope="col">Tuổi</th>
+        <th scope="col">Nghề nghiệp</th>
+        <th scope="col">Nơi ở hiện nay</th>
+        <th scope="col">Nơi làm việc</th>
+        <th scope="col"></th>
+      </tr>
+    <tbody>
+      <tr *ngFor="let i=index;let item of thongTinGiaDinh">
+        <td>{{i+1}}</td>
+        <td>{{item.ho_ten_nguoi_than}}</td>
+        <td>{{item.quan_he}}</td>
+        <td>{{item.tuoi}}</td>
+        <td>{{item.nghe_nghiep }}</td>
+        <td>{{item.noi_o_hien_nay }}</td>
+        <td>{{item.noi_lam_viec}}</td>
+        <td ><button class="btn btn-outline-primary" (click)="openDetail(formDetail,item, 2)"><i class="fas fa-pencil-alt"></i></button></td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+<!-- thông tin quá trình đào tạo -->
+<div *ngIf="this.func==3"  >
+  <button (click)="create(formCreate, 3)" class="btn btn-success"><i class="fas fa-user-plus">&nbsp;Thêm thông tin</i></button><br>
+  <table class="table table-bordered">
+    <thead >
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Nơi đào tạo</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Trình độ đào tạo</th>
+        <th scope="col">Ngày bắt đầu</th>
+        <th scope="col">Ngày kết thúc</th>
+        <th scope="col"></th>
+      </tr>
+    <tbody>
+      <tr *ngFor="let i=index;let item of quaTrinhDaoTao">
+        <td>{{i+1}}</td>
+        <td>{{item.ten_noi_dao_tao}}</td>
+        <td>{{item.dia_chi}}</td>
+        <td>{{item.trinh_do_dao_tao}}</td>
+        <td>{{item.ngay_bat_dau | date:'dd/MM/yyyy'}}</td>
+        <td>{{item.ngay_ket_thuc | date:'dd/MM/yyyy'}}</td>
+        <td ><button class="btn btn-outline-primary" (click)="openDetail(formDetail,item, 3)"><i class="fas fa-pencil-alt"></i></button></td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+<!-- thông tin quá trình công tác -->
+<div *ngIf="this.func==4"  >
+  <button (click)="create(formCreate, 4)" class="btn btn-success"><i class="fas fa-user-plus">&nbsp;Thêm thông tin</i></button><br>
+
+  <table class="table table-bordered">
+    <thead >
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Tên cơ quan</th>
+        <th scope="col">Địa chỉ làm việc</th>
+        <th scope="col">Ngày bắt đầu</th>
+        <th scope="col">Ngày kết thúc</th>
+        <th scope="col"></th>
+      </tr>
+    <tbody>
+      <tr *ngFor="let i=index;let item of quaTrinhCongTac">
+        <td>{{i+1}}</td>
+        <td>{{item.ten_co_quan}}</td>
+        <td>{{item.dia_chi_lam_viec}}</td>
+        <td>{{item.ngay_bat_dau | date:'dd/MM/yyyy'}}</td>
+        <td>{{item.ngay_ket_thuc | date:'dd/MM/yyyy'}}</td>
+        <td ><button class="btn btn-outline-primary" (click)="openDetail(formDetail,item, 4)"><i class="fas fa-pencil-alt"></i></button></td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+<!-- thông tin bằng cấp chứng chỉ -->
+<div *ngIf="this.func==5"  >
+  <button (click)="create(formCreate, 5)" class="btn btn-success"><i class="fas fa-user-plus">&nbsp;Thêm thông tin</i></button><br>
+
+  <table class="table table-bordered">
+    <thead >
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Loại bằng cấp/chứng chỉ</th>
+        <th scope="col">Ngày cấp</th>
+        <th scope="col"></th>
+      </tr>
+    <tbody>
+      <tr *ngFor="let i=index;let item of bangCapChungChi">
+        <td>{{i+1}}</td>
+        <td>{{item.loai_bang}}</td>
+        <td>{{item.ngay_cap | date:'dd/MM/yyyy'}}</td>
+        <td ><button class="btn btn-outline-primary" (click)="openDetail(formDetail,item, 5)"><i class="fas fa-pencil-alt"></i></button></td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+<ng-template #formDetail let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title">Cập nhật</h2>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form *ngIf="this.func == 2" [formGroup] = "editForm" >
+        <div class="form-group row">
+          <div class="col-sm-1"></div>
+          <input type="text" hidden formControlName="id" id="id_func2">
+          <input type="text" hidden formControlName="nhan_vien_id" id="idnv_func2">
+          <label class="col-sm-2">Họ tên</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" formControlName="ho_ten_nguoi_than" id="ho_ten_func2">
+          </div>
+          <label class="col-sm-1">Quan hệ</label>
+          <div class="col-sm-3 ">
+            <input type="text" class="form-control" formControlName="quan_he" id="quan_he_func2">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-1"></div>
+          <label class="col-sm-2">Nghề nghiệp</label>
+          <div class="col-sm-4 ">
+            <input type="text" class="form-control" formControlName="nghe_nghiep" id="nghe_nghiep_func2">
+          </div>
+          <label class="col-sm-1">Tuổi</label>
+          <div class="col-sm-3 ">
+            <input type="text" class="form-control" formControlName="tuoi" id="tuoi_func2">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-1"></div>
+          <label class="col-sm-2">Nơi ở hiện nay</label>
+          <div class="col-sm-8 ">
+            <input type="text" class="form-control" formControlName="noi_o_hien_nay" id="noi_o_hien_nay_func2">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-1"></div>
+          <label class="col-sm-2">Nơi làm việc</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="noi_lam_viec" id="noi_lam_viec_func2">
+          </div>
+        </div>
+    </form>
+    <form *ngIf="this.func == 3" [formGroup] = "editForm">
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <input type="text" hidden formControlName="id" id="id_func3">
+        <input type="text" hidden formControlName="nhan_vien_id" id="idnv_func3">
+        <label class="col-sm-2">Nơi đào tạo</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="ten_noi_dao_tao" id="ten_noi_dao_tao3">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Địa chỉ</label>
+        <div class="col-sm-6 ">
+          <input type="text" class="form-control" formControlName="dia_chi" id="dia_chi3">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2" for="trinh_do_dao_tao3">Trình độ đào tạo</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="trinh_do_dao_tao" id="trinh_do_dao_tao3">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2" for="ngay_bat_dau3">Ngày bắt đầu</label>
+        <div class="col-sm-6 ">
+          <input type="date" value="ngay_bat_dau" class="form-control" formControlName="ngay_bat_dau" id="ngay_bat_dau3">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Ngày kết thúc</label>
+        <div class="col-sm-6 ">
+          <input type="date" class="form-control" formControlName="ngay_ket_thuc" id="ngay_ket_thuc3">
+        </div>
+      </div>
+    </form>
+    <form *ngIf="this.func == 4" [formGroup] = "editForm">
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <input type="text" hidden formControlName="id" id="id_func4">
+        <input type="text" hidden formControlName="nhan_vien_id" id="idnv_func4">
+        <label class="col-sm-2">Tên cơ quan</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="ten_co_quan" id="ten_co_quan4">
+        </div>
+
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Địa chỉ</label>
+        <div class="col-sm-6 ">
+          <input type="text" class="form-control" formControlName="dia_chi_lam_viec" id="dia_chi_lam_viec4">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Ngày bắt đầu</label>
+        <div class="col-sm-6 ">
+          <input type="date" class="form-control" formControlName="ngay_bat_dau" id="ngay_bat_dau4">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Ngày kết thúc</label>
+        <div class="col-sm-6 ">
+          <input type="date" class="form-control" formControlName="ngay_ket_thuc" id="ngay_ket_thuc4">
+        </div>
+      </div>
+    </form>
+    <form *ngIf="this.func == 5" [formGroup] = "editForm">
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <input type="text" hidden formControlName="id" id="id_func4">
+        <input type="text" hidden formControlName="nhan_vien_id" id="idnv_func4">
+        <label class="col-sm-3">Loại bằng cấp/chứng chỉ</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="loai_bang" id="loai_bang4">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-3">Ngày cấp</label>
+        <div class="col-sm-6 ">
+          <input type="date" class="form-control" formControlName="ngay_cap" id="ngay_cap4">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-primary" (click) = "submitDetail()">Lưu</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Hủy</button>
+  </div>
+</ng-template>
+
+<ng-template #formCreate let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title">Thêm thông tin</h2>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form *ngIf="this.func == 2" [formGroup] = "createForm" >
+        <div class="form-group row">
+          <div class="col-sm-1"></div>
+          <input type="text" hidden formControlName="id" id="id_func2">
+          <input type="text" hidden formControlName="nhan_vien_id" id="idnv_func2">
+          <label class="col-sm-2">Họ tên</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" formControlName="ho_ten_nguoi_than" id="ho_ten_func2">
+          </div>
+          <label class="col-sm-1">Quan hệ</label>
+          <div class="col-sm-3 ">
+            <input type="text" class="form-control" formControlName="quan_he" id="quan_he_func2">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-1"></div>
+          <label class="col-sm-2">Nghề nghiệp</label>
+          <div class="col-sm-4 ">
+            <input type="text" class="form-control" formControlName="nghe_nghiep" id="nghe_nghiep_func2">
+          </div>
+          <label class="col-sm-1">Tuổi</label>
+          <div class="col-sm-3 ">
+            <input type="text" class="form-control" formControlName="tuoi" id="tuoi_func2">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-1"></div>
+          <label class="col-sm-2">Nơi ở hiện nay</label>
+          <div class="col-sm-8 ">
+            <input type="text" class="form-control" formControlName="noi_o_hien_nay" id="noi_o_hien_nay_func2">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-1"></div>
+          <label class="col-sm-2">Nơi làm việc</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="noi_lam_viec" id="noi_lam_viec_func2">
+          </div>
+        </div>
+    </form>
+    <form *ngIf="this.func == 3" [formGroup] = "createForm">
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <input type="text" hidden formControlName="id" id="id_func3">
+        <input type="text" hidden formControlName="nhan_vien_id" id="idnv_func3">
+        <label class="col-sm-2">Nơi đào tạo</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="ten_noi_dao_tao" id="ten_noi_dao_tao3">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Địa chỉ</label>
+        <div class="col-sm-6 ">
+          <input type="text" class="form-control" formControlName="dia_chi" id="dia_chi3">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2" for="trinh_do_dao_tao3">Trình độ đào tạo</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="trinh_do_dao_tao" id="trinh_do_dao_tao3">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2" for="ngay_bat_dau3">Ngày bắt đầu</label>
+        <div class="col-sm-6 ">
+          <input type="date" value="ngay_bat_dau" class="form-control" formControlName="ngay_bat_dau" id="ngay_bat_dau3">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Ngày kết thúc</label>
+        <div class="col-sm-6 ">
+          <input type="date" class="form-control" formControlName="ngay_ket_thuc" id="ngay_ket_thuc3">
+        </div>
+      </div>
+    </form>
+    <form *ngIf="this.func == 4" [formGroup] = "createForm">
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <input type="text" hidden formControlName="id" id="id_func4">
+        <input type="text" hidden formControlName="nhan_vien_id" id="idnv_func4">
+        <label class="col-sm-2">Tên cơ quan</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="ten_co_quan" id="ten_co_quan4">
+        </div>
+
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Địa chỉ</label>
+        <div class="col-sm-6 ">
+          <input type="text" class="form-control" formControlName="dia_chi_lam_viec" id="dia_chi_lam_viec4">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Ngày bắt đầu</label>
+        <div class="col-sm-6 ">
+          <input type="date" class="form-control" formControlName="ngay_bat_dau" id="ngay_bat_dau4">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-2">Ngày kết thúc</label>
+        <div class="col-sm-6 ">
+          <input type="date" class="form-control" formControlName="ngay_ket_thuc" id="ngay_ket_thuc4">
+        </div>
+      </div>
+    </form>
+    <form *ngIf="this.func == 5" [formGroup] = "createForm">
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <input type="text" hidden formControlName="id" id="id_func4">
+        <input type="text" hidden formControlName="nhan_vien_id" id="idnv_func4">
+        <label class="col-sm-3">Loại bằng cấp/chứng chỉ</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="loai_bang" id="loai_bang4">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label class="col-sm-3">Ngày cấp</label>
+        <div class="col-sm-6 ">
+          <input type="date" class="form-control" formControlName="ngay_cap" id="ngay_cap4">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-primary" (click) = "submitCreate()">Lưu</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Hủy</button>
+  </div>
+</ng-template>
+

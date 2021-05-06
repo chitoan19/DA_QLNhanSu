@@ -1,0 +1,114 @@
+<h1 class="card-title text-center py-3 title-list bg-title">Danh sách nhân viên</h1>
+<div class="container border">
+  <form class="form-search" (ngSubmit)="filter()">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="ma">Họ và Tên</label>
+          <input type="text" [(ngModel)]="nvRequest.ho_ten"  class="form-control" id="ma"
+          name="ma" >
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="mota">Quê quán</label>
+          <input type="text" [(ngModel)]="nvRequest.que_quan"  class="form-control" id="mota"
+          name="mota" >
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="chuc_vu">Chức vụ</label>
+          <input type="text" [(ngModel)]="nvRequest.chuc_vu" class="form-control" id="chuc_vu" name="chuc_vu">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="ma">Phòng ban</label>
+          <select [(ngModel)]="nvRequest.phong_ban_id" class="custom-select" id="phongbanid" name="phongbanid">
+            <option value="" selected>Tất cả</option>
+            <option value="1">Phòng giám đốc</option>
+            <option value="2">Phòng hành chính nhân sự</option>
+            <option value="3">Phòng hệ thống</option>
+            <option value="4">Phòng kinh doanh</option>
+            <option value="5">Phòng phát triển phần mềm</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="ma">Giới tính</label>
+          <select [(ngModel)]="nvRequest.gioi_tinh" class="custom-select" id="gioitinh" name="gioitinh">
+            <option value="0">Nữ</option>
+            <option value="1">Nam</option>
+            <option value="2" selected>Tất cả</option>
+          </select>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="ma">Tỉnh/TP</label>
+          <input type="text" [(ngModel)]="nvRequest.dia_chi"  class="form-control" id="diachi"
+          name="diachi" >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 text-right">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>&nbsp;Tìm kiếm</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-primary" (click)="refresh()"><i class="fas fa-redo-alt"></i>&nbsp;</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<br>
+<div class="row">
+  <div class="col-md-2">
+    <a class="nav-link add-new btn btn-success"  routerLink="/dashboard/nhan-vien/add" routerLinkActive="active" ><i class="fas fa-user-plus"></i>&nbsp;Thêm mới</a>
+  </div>
+</div>
+<div class="card ">
+  <div class="card-body list-data">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Họ và tên</th>
+          <th scope="col">Ngày sinh</th>
+          <th scope="col">Chức vụ</th>
+          <th scope="col">Quê quán</th>
+          <th scope="col"></th>
+        </tr>
+      <tbody>
+        <tr *ngFor="let i=index;let nv of listNV | paginate:{itemsPerPage: perPage, currentPage: p, totalItems: total}">
+          <td>{{i+1}}</td>
+          <td>{{nv.ho_ten}}</td>
+          <td>{{nv.ngay_sinh | date:'dd/MM/yyyy'}}</td>
+          <td>{{nv.chuc_vu}}</td>
+          <td>{{nv.que_quan }}</td>
+          <td style="width: fit-content !important;" class="action"><button class="btn btn-outline-info" title="Chi tiết" (click) = "detail(nv)"><i class="fas fa-info-circle"></i></button>&nbsp;<button class="btn btn-outline-danger" title="Xóa" (click) = "openDialog(nv)"><i class="fas fa-trash-alt"></i></button></td>
+          <!-- <td style="width: fit-content !important;" class="action"></td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<nav aria-label="Page navigation example">
+  <pagination-controls
+  (pageChange)="pageChanged(p = $event)"
+  (pageBoundsCorrection)="pageChanged($event)"
+  previousLabel="Trước"
+  nextLabel="Sau"
+  >
+  </pagination-controls>
+
+</nav>
+
+

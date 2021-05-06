@@ -1,0 +1,94 @@
+
+<h1 class="card-title text-center py-3 title-list bg-title">Danh sách tài khoản</h1>
+<div class="container border">
+
+  <form class="form-search" (ngSubmit)="filter()">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="ten_dang_nhap">Tên đăng nhập</label>
+          <input type="text" [(ngModel)]="authRequest.ten_dang_nhap"  class="form-control" id="ten_dang_nhap"
+          name="ten_dang_nhap" >
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="quyen">Quyền</label>
+          <select [(ngModel)]="authRequest.quyen"  class="custom-select" id="quyen"
+          name="quyen" >
+            <option value="-1">Tất cả</option>
+            <option value="0">User</option>
+            <option value="1">Admin</option>
+            <option value="2">Super Admin</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="trang_thai">Trạng thái</label>
+          <select [(ngModel)]="authRequest.trang_thai"  class="custom-select" id="trang_thai"
+          name="trang_thai" >
+            <option value="-1">Tất cả</option>
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 text-right">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>&nbsp;Tìm kiếm</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-primary" (click)="refresh()"><i class="fas fa-redo-alt"></i></button>
+      </div>
+    </div>
+  </form>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-3">
+
+    <a style="width: fit-content !important;" class="nav-link add-new btn btn-success" routerLink="/dashboard/tai-khoan/add" routerLinkActive="active" ><i class="fas fa-user-plus"></i>&nbsp;Tạo tài khoản</a>
+  </div>
+</div>
+<div class="card ">
+  <div class="card-body list-data">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Tên đăng nhập</th>
+          <th scope="col">Quyền</th>
+          <th scope="col">Trạng thái</th>
+          <th scope="col">Nhân viên</th>
+          <th scope="col"></th>
+        </tr>
+      <tbody>
+        <tr *ngFor="let i=index;let tk of listTK | paginate:{itemsPerPage: perPage, currentPage: p, totalItems: total}">
+          <td>{{i+1}}</td>
+          <td>{{tk.ten_dang_nhap}}</td>
+          <td>{{(tk.quyen == 0)?'User': ((tk.quyen == 1)?'Admin':'Super Admin')}}</td>
+          <td>{{(tk.trang_thai == 1)?'Active':"Inactive"}}</td>
+          <td>{{this.objectNhanVien[tk.nhan_vien_id]}}</td>
+          <td class="action"><button class="btn btn-outline-primary" title="Chi tiết" (click) = "detail(tk)"><i class="fas fa-info-circle"></i></button>&nbsp;<button *ngIf="this.user.quyen > tk.quyen" class="btn btn-outline-danger" title="Xóa" (click) = "openDialog(tk)"><i class="fas fa-trash-alt"></i></button></td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+<nav aria-label="Page navigation example">
+  <pagination-controls
+  (pageChange)="pageChanged(p = $event)"
+  (pageBoundsCorrection)="pageChanged($event)"
+  previousLabel="Trước"
+  nextLabel="Sau"
+  >
+  </pagination-controls>
+
+</nav>
+
+

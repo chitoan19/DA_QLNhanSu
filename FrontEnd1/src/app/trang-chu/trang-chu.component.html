@@ -1,0 +1,70 @@
+<h1><b>Xin chào</b> {{this.nv.ho_ten}} !</h1>
+<hr>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card bg-nv">
+      <h1 class="card-header"><i class="fas fa-users"></i>&nbsp;Nhân sự</h1>
+      <div class="card-body">
+        <div class="row color text-center">
+          <div class="col-sm-12"><b>{{this.totalNhanVien}}</b> Thành viên</div>
+        </div>
+        <br><br>
+        <div class="row color text-center">
+          <div class="col-sm-6" style="color: red;"><i class="fas fa-male">&nbsp;{{this.totalNam}}</i></div>
+          <div class="col-sm-6" style="color: blue;"><i class="fas fa-female">&nbsp;{{this.totalNu}}</i></div>
+        </div>
+      </div>
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <u>Chi tiết</u>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row frame-nv">
+            <div class="col-sm-12" *ngFor="let item of this.listNV">
+              <p><i [ngClass]="(item.gioi_tinh)?'fas fa-mars':'fas fa-venus'"></i>&nbsp;<b>{{item.ho_ten}}</b> - {{item.chuc_vu}} - {{item.ngay_sinh | date:'dd/MM/yyyy'}}</p>
+              <hr>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card bg-nv">
+      <h1 class="card-header"><i class="fas fa-sitemap"></i>&nbsp;Phòng ban</h1>
+      <div class="card-body" style="height: 130px;">
+        <div class="row color text-center">
+          <div class="col-sm-12"><b>4</b> Phòng ban</div>
+        </div>
+        <br><br>
+        <div class="row  text-center">
+          <div class="col-sm-6">&nbsp;</div>
+          <div class="col-sm-6">&nbsp;</div>
+        </div>
+      </div>
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <u>Chi tiết</u>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row frame-nv">
+            <div class="col-sm-12">
+              <p><b>Phòng hành chính nhân sự</b></p><hr>
+              <p><b>Phòng phát triển phần mềm</b></p><hr>
+              <p><b>Phòng kinh doanh</b></p><hr>
+              <p><b>Phòng hệ thống</b></p><hr>
+            </div>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,115 @@
+<h1 class="card-title text-center py-3 title-list bg-title">Danh sách chấm công</h1>
+<div class="container border">
+  <br>
+  <form class="form-search" (ngSubmit)="filter()">
+    <div class="row">
+      <div class="col-md-1">
+        <div class="form-group">
+          <label for="thang">Tháng</label>
+          <input type="number" [(ngModel)]="ccRequest.thang" min="1" max="12"  class="form-control" id="thang" name="thang">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="nam">Năm</label>
+          <input type="text" disabled [(ngModel)]="ccRequest.nam" [value]="this.now" min="1" max="12"  class="form-control" id="nam" name="nam">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="chuc_vu">Nhân viên</label>
+          <select  [(ngModel)]="ccRequest.nhan_vien_id" #nhanvien="ngModel" class="custom-select" id="nhanvien" name="nhanvien_id">
+            <option value="">Tất cả</option>
+            <option *ngFor="let item of listNhanVien"  value="{{item.id}}">{{item.ho_ten}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-1">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-filter"></i>&nbsp;Lọc</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-outline-primary" (click)="refresh()"><i class="fas fa-redo-alt"></i>&nbsp;</button>
+      </div>
+    </div>
+    <br>
+  </form>
+</div>
+<br>
+
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-success" (click)="openImportForm(importForm)" style="color: white;"><i class="fas fa-file-excel"></i>&nbsp;Import file</button>
+  </div>
+</div>
+<div class="card ">
+  <div class="card-body list-data">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Ngày</th>
+          <th scope="col">Giờ vào</th>
+          <th scope="col">Giờ ra</th>
+          <th scope="col">Nhân viên</th>
+        </tr>
+      <tbody>
+        <tr *ngFor="let i=index;let cc of listChamCong | paginate:{itemsPerPage: perPage, currentPage: p, totalItems: total}">
+          <td>{{i+1}}</td>
+          <td>{{cc.ngay_thang | date:'dd/MM/yyyy'}}</td>
+          <td>{{cc.gio_vao | date:'dd/MM/yyyy hh:mm:ss a'}}</td>
+          <td>{{cc.gio_ra | date:'dd/MM/yyyy hh:mm:ss a'}}</td>
+          <td>{{this.objectNhanVien[cc.nhan_vien_id]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<nav aria-label="Page navigation example">
+  <pagination-controls
+  (pageChange)="pageChanged(p = $event)"
+  (pageBoundsCorrection)="pageChanged($event)"
+  previousLabel="Trước"
+  nextLabel="Sau"
+  >
+  </pagination-controls>
+</nav>
+
+<ng-template #importForm let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title">Nhập file chấm công</h2>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+          <input id="file-upload-info" disabled name="fileName" class="form-control" placeholder="File..."/>
+          <input id="file_import" class="form-control" (change)="onFileChanged($event)" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display: none;"  onchange="$('#file-upload-info').val(this.files[0].name)" style="visibility:hidden;">
+        </div>
+        <div class="col-md-3">
+          <label class="col-md-3" for="file_import" class="btn btn-primary" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;">Browse</label>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <img *ngIf="this.isLoad" width="50px" height="50px" src="./assets/static/images/loading.gif">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button [disabled]="this.file == null" type="submit" class="btn btn-outline-primary" (click) = "submitImport()">Lưu</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Hủy</button>
+  </div>
+</ng-template>
+
+

@@ -1,0 +1,63 @@
+<h1 class="card-title text-center py-3 title-list bg-title">Tạo tài khoản</h1>
+
+<form class="form-search" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="ten_dang_nhap">Tên đăng nhập</label>
+        <input  type="text" [(ngModel)]="tk.ten_dang_nhap" #ten_dang_nhap="ngModel"  class="form-control" id="ten_dang_nhap" required
+        name="ten_dang_nhap" >
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="quyen">Quyền</label>
+        <select  [(ngModel)]="tk.quyen" #quyen="ngModel" class="custom-select" id="quyen" name="quyen">
+          <option value="0">User</option>
+          <option value="1">Admin</option>
+          <option value="2">Super Admin</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="nhanvien">Nhân viên</label>
+        <select  [(ngModel)]="tk.nhan_vien_id" #nhanvien="ngModel" class="custom-select" id="nhanvien" name="nhanvien">
+          <option *ngFor="let item of newListNv"  value="{{item.id}}">{{item.ho_ten}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="mk">Mật khẩu</label>
+        <input type="password" [(ngModel)]="tk.mat_khau" #mk="ngModel"  class="form-control" id="mk"
+        name="mk" >
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="trangthai">Trạng thái</label>
+        <select  [(ngModel)]="tk.trang_thai" #trangthai="ngModel" class="custom-select" id="trangthai" name="trangthai">
+          <option value="0">Inactive</option>
+          <option value="1">Active</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 text-right">
+      <div class="form-group">
+        <button  type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i>&nbsp;Lưu</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <button class="btn btn-success" (click)="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Quay lại</button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,60 @@
+<h1 class="card-title text-center py-3 title-list bg-title"><i class="far fa-user-circle"></i>&nbsp;Thông tin tài khoản</h1>
+
+<form class="form-search" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="ten_dang_nhap">Tên đăng nhập</label>
+        <input [disabled]="!isEdit" type="text" [(ngModel)]="tk.ten_dang_nhap" #ten_dang_nhap="ngModel"  class="form-control" id="ten_dang_nhap" required
+        name="ten_dang_nhap" >
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="quyen">Quyền</label>
+        <input  type="text" disabled   [(ngModel)]="quyen" class="form-control" id="quyen"
+        name="quyen">
+
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="mk">Mật khẩu</label>
+        <input [disabled]="!isEdit" [type]="(!isEdit)?'password':'text'" [(ngModel)]="tk.mat_khau" #mk="ngModel"  class="form-control" id="mk"
+        name="mk" >
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="trangthai">Trạng thái</label>
+        <input disabled  [(ngModel)]="trang_thai" #trangthai="ngModel" class="form-control" id="trangthai" name="trangthai" >
+        <!-- <select *ngIf="isEdit" [(ngModel)]="tk.trang_thai" #trangthai="ngModel" class="custom-select" id="trangthai" name="trangthai">
+          <option value="0">Inactive</option>
+          <option value="1">Active</option>
+        </select> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 text-right">
+      <div class="form-group">
+        <button  type="submit" *ngIf="isEdit" class="btn btn-primary"><i class="fas fa-user-plus"></i>&nbsp;Lưu</button>
+        <button  (click)="enableEdit()" *ngIf="!isEdit" class="btn btn-primary"><i class="fas fa-pencil-alt"></i>&nbsp;Cập nhật</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <button class="btn btn-success" (click)="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Quay lại</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 text-right">
+      <button class="btn btn-danger" *ngIf="isEdit" (click)="enableEdit()"><i class="far fa-times-circle"></i>&nbsp;Hủy</button>
+    </div>
+  </div>
+</form>
