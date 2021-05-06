@@ -1,0 +1,98 @@
+<head th:replace="header"></head>
+<body>
+	<!-- ============================================================== -->
+	<!-- main wrapper -->
+	<!-- ============================================================== -->
+	<div class="dashboard-main-wrapper">
+		<!-- ============================================================== -->
+		<!-- navbar -->
+		<!-- ============================================================== -->
+		<div th:replace="top"></div>
+		<!-- ============================================================== -->
+		<!-- end navbar -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- left sidebar -->
+		<!-- ============================================================== -->
+		<div th:replace="side-bar"></div>
+		<!-- ============================================================== -->
+		<!-- end left sidebar -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- wrapper  -->
+		<!-- ============================================================== -->
+		<div class="dashboard-wrapper">
+			<div class="dashboard-ecommerce">
+				<div class="container-fluid dashboard-content ">
+					<div id="grid"></div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Họ tên</th>
+								<th>Giới tính</th>
+								<th>Vị trí</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="nv : ${list_nhan_vien}">
+								<td th:text="${nv.ho_ten}"></td>
+								<td th:text="${nv.gioi_tinh} ? 'Nam' : 'Nữ'"></td>
+								<td th:text="${nv.vi_tri}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- ============================================================== -->
+			<!-- footer -->
+			<!-- ============================================================== -->
+			<div class="footer" th:insert="footer"></div>
+			<!-- ============================================================== -->
+			<!-- end footer -->
+			<!-- ============================================================== -->
+		</div>
+		<!-- ============================================================== -->
+		<!-- end wrapper  -->
+		<!-- ============================================================== -->
+	</div>
+	<!-- ============================================================== -->
+	<!-- end main wrapper  -->
+	<!-- ============================================================== -->
+	<!-- Optional JavaScript -->
+	<!-- jquery 3.3.1 -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#grid").kendoGrid({
+				dataSource:{
+					type:"odata",
+					transport:{
+						read:"http://localhost:8080/nhan-vien/danhsach"
+					},
+					pagesize: 5,
+				},
+				height: 500,
+				groupable: true,
+				sortable: true,
+				pageable:{
+					refresh:true,
+					pageSizes: true
+				},
+				columns:[
+					{field: "ho_ten", title: "Họ tên"},
+					{field: "gioi_tinh", title: "Giới tính"},
+					{field: "vi_tri", title: "Vị trí"}
+				]
+			});
+		});
+	</script>
+	
+	<!-- bootstap bundle js -->
+	<script src="/js/bootstrap.bundle.js"></script>
+	<!-- slimscroll js -->
+	<script src="/js/jquery.slimscroll.js"></script>
+	<!-- main js -->
+	<script src="/js/main-js.js"></script>
+
+</body>
+
+</html>

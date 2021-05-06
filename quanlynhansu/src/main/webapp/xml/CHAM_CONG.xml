@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbook>
+    <worksheet name="ChamCong">
+        <section startRow="0" endRow="0">
+        </section>
+        <loop startRow="1" endRow="1" items="rows" var="row" varType="com.tttn.quanlynhansu.dto.ChamCongDTO">
+            <section startRow="1" endRow="1">
+                <mapping row="1" col="2" type="java.lang.String">row.gio_vao</mapping>
+                <mapping row="1" col="3" type="java.lang.String">row.gio_ra</mapping>
+                <mapping row="1" col="4" type="java.lang.String">row.ngay</mapping>
+                <mapping row="1" col="5" type="java.lang.String">row.trang_thai</mapping>   
+                <mapping row="1" col="6" type="java.lang.String">row.nhan_vien_id</mapping>
+            </section>
+            <loopbreakcondition>
+                <rowcheck offset="0">
+                    <cellcheck offset="0"/>
+                </rowcheck>
+            </loopbreakcondition>
+        </loop>
+    </worksheet>
+</workbook>	
