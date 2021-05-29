@@ -22,7 +22,6 @@ export class ChamCongComponent implements OnInit {
   ccRequest: ChamCongRequest;
   importForm: FormGroup;
   file: any;
-  now: number;
   objectNhanVien: Object;
   isLoad = false;
   constructor(private ccService: ChamCongService, private fb: FormBuilder, private nvService: NhanVienService,
@@ -41,7 +40,6 @@ export class ChamCongComponent implements OnInit {
           obj[item.id] = item.ho_ten;
           return obj;
       },{});
-      this.now = new Date().getFullYear();
     });
     this.getData();
   }
@@ -63,6 +61,7 @@ export class ChamCongComponent implements OnInit {
       this.isLoad = false;
       console.log("done", data);
       if(data.list){
+        this.getData;
         this.notify("Import thành công");
         this.modalService.dismissAll();
       }

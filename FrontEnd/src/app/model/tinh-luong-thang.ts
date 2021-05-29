@@ -6,9 +6,12 @@ export class TinhLuongThang {
   so_ngay_di_muon:number;
   khau_tru:number;
   thuong:number;
+  thang: number;
+  nam: number;
   nguoi_cham_cong:String;
   ghi_chu:String;
-  nhan_vien_id:Number;
+  tong_luong: number;
+  nhan_vien_id:number;
   constructor(){
 
   }

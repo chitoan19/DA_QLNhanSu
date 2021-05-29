@@ -42,7 +42,7 @@ public class TaiKhoanService {
 
 	public TaiKhoan getTaiKhoan(String username, String password) {
 		for (TaiKhoan tk : repo.findAll()) {
-			if (tk.getTen_dang_nhap().equals(username) && tk.getMat_khau().equals(password)) {
+			if (tk.getTen_dang_nhap().equals(username) && tk.getMat_khau().equals(password) && tk.getTrang_thai() == 1) {
 				return tk;
 			}
 		}

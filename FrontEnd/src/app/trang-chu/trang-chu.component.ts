@@ -10,7 +10,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./trang-chu.component.css']
 })
 export class TrangChuComponent implements OnInit {
-  nv = new NhanVien();
+  nv: NhanVien;;
   nhan_vien_id: number;
   listNhanVienNu: NhanVien[];
   listNhanVienNam: NhanVien[];
@@ -23,11 +23,11 @@ export class TrangChuComponent implements OnInit {
   constructor(private nvService: NhanVienService) {
     this.nvRequest = new NhanVienRequest();
     this.totalNhanVien = 0;
+    this.nv = new NhanVien();
   }
 
   ngOnInit(): void {
     this.nhan_vien_id = JSON.parse(localStorage.getItem('currentUser')).nhan_vien_id;
-    console.log("home");
     this.nvService.getNhanVienById(this.nhan_vien_id).subscribe(data=>{
       this.nv = data.object;
     });

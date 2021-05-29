@@ -8,7 +8,7 @@
         <!-- ============================================================== -->
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="/dashboard">FintechViet</a>
+                <a class="navbar-brand" href="/dashboard"><img width="49px" height="40px" src="./assets/static/images/logoF.PNG">FintechViet</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -22,8 +22,8 @@
                                     <span class="status"></span><span class="ml-2">Online</span>
                                 </div>
                                 <a class="dropdown-item" routerLink="/dashboard/info/{{this.nv.id}}"><i class="fas fa-user mr-2"></i>Thông tin cá nhân</a>
-                                <a class="dropdown-item" routerLink="/dashboard/myaccount/{{this.tk.id}}"><i class="fas fa-user-circle"></i>&nbsp;Thông tin tài khoản</a>
-                                <a class="dropdown-item" (click)="logout()" href="#"><i class="fas fa-power-off mr-2"></i>Đăng xuất</a>
+                                <a class="dropdown-item" routerLink="/dashboard/myaccount/{{this.tk.id}}"><i class="fas fa-user-circle"></i>&nbsp;&nbsp;Thông tin tài khoản</a>
+                                <a class="dropdown-item" (click)="logout()" href="#"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Đăng xuất</a>
                             </div>
                         </li>
                     </ul>
@@ -52,7 +52,7 @@
                                 <a class="nav-link" routerLink="/dashboard/home" data-toggle="collapse" id="overall" ><i class="fas fa-home"></i>Trang chủ</a>
                             </li>
                             <li class="nav-item" *ngIf="this.tk.quyen > 0">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fas fa-tasks"></i>Quản lý nhân viên</a>
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fas fa-users"></i>Quản lý nhân viên</a>
                                 <div id="submenu-2" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
@@ -61,16 +61,15 @@
                                         <li class="nav-item">
                                             <a class="nav-link" routerLink="/dashboard/nhan-vien/add"><i class="fas fa-id-badge"></i>Nhập hồ sơ nhân viên</a>
                                         </li>
-
                                     </ul>
                                 </div>
                             </li>
                             <li class="nav-item" *ngIf="this.tk.quyen > 0">
-                              <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-users"></i>Quản lý tài khoản</a>
+                              <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-user-circle"></i>Quản lý tài khoản</a>
                               <div id="submenu-3" class="collapse submenu" style="">
                                   <ul class="nav flex-column">
                                       <li class="nav-item">
-                                          <a class="nav-link" routerLink="/dashboard/tai-khoan"><i class="fas fa-list"></i>Tài khoản trong hệ thống <span class="badge badge-secondary">New</span></a>
+                                          <a class="nav-link" routerLink="/dashboard/tai-khoan"><i class="fas fa-list"></i>Danh sách tài khoản<span class="badge badge-secondary">New</span></a>
                                       </li>
                                   </ul>
                               </div>
@@ -83,7 +82,7 @@
                                           <a class="nav-link" routerLink="/dashboard/cham-cong" ><i class="far fa-calendar-alt"></i>&nbsp;Danh sách chấm công</a>
                                       </li>
                                       <li class="nav-item">
-                                        <a class="nav-link" routerLink="/dashboard/thong-ke" ><i class="fas fa-calculator"></i>&nbsp;Thống kê</a>
+                                        <a class="nav-link" routerLink="/dashboard/thong-ke" ><i class="fas fa-calculator"></i>&nbsp;Thống kê lương tháng</a>
                                     </li>
                                   </ul>
                               </div>
@@ -119,7 +118,7 @@
         <!-- ============================================================== -->
         <div class="dashboard-wrapper">
             <div class="dashboard-ecommerce">
-                <div class="container-fluid dashboard-content ">
+                <div class="container-fluid dashboard-content">
                     <router-outlet></router-outlet>
                 </div>
             </div>

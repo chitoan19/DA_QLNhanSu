@@ -16,7 +16,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .bg-title{
-  background-color: #e8e7ee;
   color: #007bff;
+  margin-bottom: 0 !important;
   font-weight: bold !important;
+}
+
+.dashboard-content{
+  padding-top: 0;
 }

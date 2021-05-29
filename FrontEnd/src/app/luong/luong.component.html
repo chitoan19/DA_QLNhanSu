@@ -1,4 +1,5 @@
-<h1 class="card-title text-center py-3 title-list bg-title">Quản lý tiền lương</h1>
+<h1 class="card-title py-3 title-list bg-title"><i class="fas fa-dollar-sign"></i>&nbsp;Quản lý tiền lương</h1>
+<hr style="margin-top: 0;">
 <div class="container border">
   <br>
   <div class="row">
@@ -16,7 +17,11 @@
   </div>
 </div>
 <br>
-
+<div class="row">
+  <div class="col-md-2">
+    <button class="btn btn-success" (click)="openFormCreate(formCreate)" style="color: white;"><i class="fas fa-file-excel"></i>&nbsp;Tạo mới</button>
+  </div>
+</div>
 <div class="card ">
   <div class="card-body list-data">
     <table class="table table-bordered">
@@ -104,5 +109,62 @@
     <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Hủy</button>
   </div>
 </ng-template>
-
-
+<ng-template #formCreate let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title">Thêm mức lương </h2>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form  [formGroup] = "createForm">
+      <div class="row">
+        <input type="text" hidden formControlName="id" id="id">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <select select2  formControlName="nhan_vien_id" class="custom-select" id="nhanvien" name="nhanvien">
+            <option *ngFor="let item of newListNv"  value="{{item.id}}">{{item.ho_ten}}</option>
+          </select>
+          <!-- <mat-form-field style="font-size: 18px;">
+            <mat-select placeholder="Nhân viên" id="nhan_vien_id" formControlName="nhan_vien_id" (selectionChange)="filter($event)" #singleSelectAdd>
+              <mat-option *ngFor="let nv of this.newListNv" [value]="nv.id">
+                {{nv.ho_ten}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <mat-form-field class="fullwidth"  appearance="fill">
+            <mat-label style="font-size: 18px !important;"><b>Lương cơ bản</b></mat-label>
+            <input  matInput formControlName="luong_co_ban" id="luong_co_ban" type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <mat-form-field class="fullwidth" appearance="fill">
+            <mat-label style="font-size: 18px !important;"><b>Phụ cấp tháng</b></mat-label>
+            <input  matInput formControlName="phu_cap" id="phu_cap" type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <mat-form-field class="fullwidth" appearance="fill">
+            <mat-label style="font-size: 18px !important;"><b>Mức lương làm thêm(/giờ)</b></mat-label>
+            <input  matInput formControlName="muc_luong_lam_them_gio" id="muc_luong_lam_them_gio" type="text" />
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click) = "submitCreate()">Lưu</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Hủy</button>
+  </div>
+</ng-template>

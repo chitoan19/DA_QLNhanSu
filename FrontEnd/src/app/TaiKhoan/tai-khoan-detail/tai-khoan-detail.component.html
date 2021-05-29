@@ -1,5 +1,5 @@
-<h1 class="card-title text-center py-3 title-list bg-title">Thông tin tài khoản</h1>
-
+<h1 class="card-title py-3 title-list bg-title"><i class="fas fa-info-circle"></i>&nbsp;Thông tin tài khoản</h1>
+<hr style="margin-top: 0;">
 <form class="form-search" (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col-md-4">
@@ -19,6 +19,13 @@
           <option value="1">Admin</option>
           <option value="2">Super Admin</option>
         </select>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="ho_ten">Nhân viên</label>
+        <input disabled type="text" [value]="this.nhan_vien.ho_ten"  class="form-control" id="ho_ten"
+        name="ho_ten" >
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 package com.tttn.quanlynhansu.request;
 
 import java.util.Date;
+import java.util.List;
 
 public class ChamCongRequest {
 	private Integer pageSize;
@@ -8,6 +9,10 @@ public class ChamCongRequest {
 	private Date ngay_thang;
 	private Integer thang;
 	private Integer nam;
+	private Long nhan_vien_id;
+	private String nguoi_cham;
+	private List<Long> listIdnv;
+	
 	
 	public Integer getThang() {
 		return thang;
@@ -21,7 +26,7 @@ public class ChamCongRequest {
 	public void setNam(Integer nam) {
 		this.nam = nam;
 	}
-	private Long nhan_vien_id;
+	
 	public Integer getPageSize() {
 		return pageSize;
 	}
@@ -48,6 +53,18 @@ public class ChamCongRequest {
 	}
 	public ChamCongRequest() {
 		super();
+	}
+	public List<Long> getListIdnv() {
+		return listIdnv;
+	}
+	public void setListIdnv(List<Long> listIdnv) {
+		this.listIdnv = listIdnv;
+	}
+	public String getNguoi_cham() {
+		return nguoi_cham;
+	}
+	public void setNguoi_cham(String nguoi_cham) {
+		this.nguoi_cham = nguoi_cham;
 	}
 	
 }

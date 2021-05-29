@@ -23,6 +23,8 @@ export class LuongComponent implements OnInit {
   listNhanVien: NhanVien[];
   editForm: FormGroup;
   idnvClicked: number;
+  createForm: FormGroup;
+  newListNv = new Array();
   constructor(private luongService: LuongServiceService, private notificationService: NotificationsService,
     private modalService: NgbModal, private nvService: NhanVienService, private fb: FormBuilder) {
     this.luongRequest = new LuongRequest();
@@ -33,13 +35,13 @@ export class LuongComponent implements OnInit {
   ngOnInit(): void {
     this.nvService.getAllNhanVien().subscribe(data =>{
       this.listNhanVien = data;
+      console.log(this.listNhanVien);
       this.objectNhanVien = Array.from(this.listNhanVien).reduce((obj, item) =>{
           obj[item.id] = item.ho_ten;
           return obj;
       },{});
       this.getData();
     });
-
   }
 
   public filter(event){
@@ -90,10 +92,51 @@ export class LuongComponent implements OnInit {
     }
   }
 
+  public openFormCreate(openFormCreate){
+    this.createForm = this.fb.group({
+      id: [''],
+      muc_luong_lam_them_gio: [''],
+      luong_co_ban: [''],
+      phu_cap: [''],
+      nhan_vien_id: ['']
+    });
+    this.modalService.open(openFormCreate, {
+      centered: true,
+      backdrop: 'static',
+      size: 'lg'
+    });
+  }
+
+  public submitCreate(){
+    var item = this.createForm.getRawValue();
+    console.log('luong',item);
+      this.luongService.create(item).subscribe(data =>{
+        this.modalService.dismissAll();
+        console.log(data);
+        this.getData();
+        this.notify("Thêm thành công");
+      });
+  }
   public getData(){
     this.luongService.findAll(this.luongRequest).subscribe(data =>{
       this.listLuong = data.list;
       this.total = data.totalItem;
+      this.listLuong.forEach((item, index) => {
+        this.listNhanVien.forEach((item2, index2) => {
+          if(item.nhan_vien_id == item2.id){
+            this.listNhanVien.splice(index2, 1);
+          }
+        });
+      });
+      this.newListNv = this.listNhanVien;
+      console.log(this.newListNv);
+    });
+  }
+
+  public notify(notice){
+    this.notificationService.success('success', notice, {
+      timeOut: 2000,
+      position: ['bottom', 'right']
     });
   }
 

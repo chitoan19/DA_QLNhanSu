@@ -39,6 +39,8 @@ import { LuongComponent } from './luong/luong.component';
 import { MapComponent } from './map/map.component';
 import { ThongKeCongThangComponent } from './ChamCong/thong-ke-cong-thang/thong-ke-cong-thang.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +82,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatSlideToggleModule,
     MatExpansionModule,
     NgxMatSelectSearchModule,
     ReactiveFormsModule,

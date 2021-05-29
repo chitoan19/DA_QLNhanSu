@@ -88,17 +88,17 @@ export class TaiKhoanListComponent implements OnInit {
 
   public delete(tk: TaiKhoan, isDel: string){
     console.log(this.user.quyen, tk.quyen);
-    if(this.user.quyen > tk.quyen){
-      if(isDel == "true"){
+    if(isDel == "true"){
+      if(this.user.quyen > tk.quyen && tk.trang_thai == 0){
         console.log(isDel);
         this.tkService.delete(tk.id).subscribe(data => {
           console.log(data);
           this.getAll();
           this.notify('Xóa thành công');
         });
+      } else {
+        this.error('Không thể xóa tài khoản này');
       }
-    } else {
-      this.error('Bạn không được phép xóa tài khoản này');
     }
   }
 
@@ -113,6 +113,18 @@ export class TaiKhoanListComponent implements OnInit {
     this.notificationService.success('success', notice, {
       timeOut: 2000,
       position: ['bottom', 'right']
+    });
+  }
+
+  public activate(tk: TaiKhoan){
+    console.log(tk);
+    tk.trang_thai = (tk.trang_thai == 1) ? tk.trang_thai = 0: 1;
+    this.tkService.update(tk).subscribe(data =>{
+      this.tkService.findAll(this.authRequest).subscribe(data =>{
+        this.listTK = data.list;
+        this.total = data.totalItem;
+        this.perPage = this.authRequest.pageSize;
+      });
     });
   }
 

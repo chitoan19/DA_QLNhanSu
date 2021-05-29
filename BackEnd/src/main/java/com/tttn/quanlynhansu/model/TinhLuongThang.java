@@ -27,7 +27,7 @@ public class TinhLuongThang {
 	private int so_gio_lam_them;
 	
 	@Column(name = "so_ngay_di_muon")
-	private int so_ngay_di_muon;
+	private Integer so_ngay_di_muon;
 
 	@Column(name = "thang")
 	private Integer thang;
@@ -36,36 +36,23 @@ public class TinhLuongThang {
 	private Integer nam;
 
 	@Column(name = "khau_tru")
-	private long khau_tru;
+	private Long khau_tru;
 
 	@Column(name = "thuong")
-	private long thuong;
+	private Long thuong;
 
 	@Column(name = "nguoi_cham_cong")
 	private String nguoi_cham_cong;
 
 	@Column(name = "ghi_chu")
 	private String ghi_chu;
+	
+	@Column(name = "tong_luong")
+	private Long tong_luong;
 
 	@Column(name = "nhan_vien_id")
 	private Long nhan_vien_id;
-	public Integer getNam() {
-		return nam;
-	}
-
-	public void setNam(Integer nam) {
-		this.nam = nam;
-	}
-
-	public void setKhau_tru(long khau_tru) {
-		this.khau_tru = khau_tru;
-	}
-
-	public void setThuong(long thuong) {
-		this.thuong = thuong;
-	}
-
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -98,11 +85,11 @@ public class TinhLuongThang {
 		this.so_gio_lam_them = so_gio_lam_them;
 	}
 
-	public int getSo_ngay_di_muon() {
+	public Integer getSo_ngay_di_muon() {
 		return so_ngay_di_muon;
 	}
 
-	public void setSo_ngay_di_muon(int so_ngay_di_muon) {
+	public void setSo_ngay_di_muon(Integer so_ngay_di_muon) {
 		this.so_ngay_di_muon = so_ngay_di_muon;
 	}
 
@@ -114,7 +101,15 @@ public class TinhLuongThang {
 		this.thang = thang;
 	}
 
-	public double getKhau_tru() {
+	public Integer getNam() {
+		return nam;
+	}
+
+	public void setNam(Integer nam) {
+		this.nam = nam;
+	}
+
+	public Long getKhau_tru() {
 		return khau_tru;
 	}
 
@@ -122,7 +117,7 @@ public class TinhLuongThang {
 		this.khau_tru = khau_tru;
 	}
 
-	public double getThuong() {
+	public Long getThuong() {
 		return thuong;
 	}
 
@@ -153,23 +148,18 @@ public class TinhLuongThang {
 	public void setNhan_vien_id(Long nhan_vien_id) {
 		this.nhan_vien_id = nhan_vien_id;
 	}
+	
+	public Long getTong_luong() {
+		return tong_luong;
+	}
 
-	public TinhLuongThang(Long id, int so_ngay_cong, int so_ngay_nghi_phep, int so_gio_lam_them, int so_ngay_di_muon,
-			Long khau_tru, Long thuong, String nguoi_cham_cong, String ghi_chu, Long nhan_vien_id) {
-		super();
-		this.id = id;
-		this.so_ngay_cong = so_ngay_cong;
-		this.so_ngay_nghi_phep = so_ngay_nghi_phep;
-		this.so_gio_lam_them = so_gio_lam_them;
-		this.so_ngay_di_muon = so_ngay_di_muon;
-		this.khau_tru = khau_tru;
-		this.thuong = thuong;
-		this.nguoi_cham_cong = nguoi_cham_cong;
-		this.ghi_chu = ghi_chu;
-		this.nhan_vien_id = nhan_vien_id;
+	public void setTong_luong(Long tong_luong) {
+		this.tong_luong = tong_luong;
 	}
 
 	public TinhLuongThang() {
 		super();
 	}
+	
+	
 }

@@ -24,7 +24,7 @@
           </mat-expansion-panel-header>
           <div class="row frame-nv">
             <div class="col-sm-12" *ngFor="let item of this.listNV">
-              <p><i [ngClass]="(item.gioi_tinh)?'fas fa-mars':'fas fa-venus'"></i>&nbsp;<b>{{item.ho_ten}}</b> - {{item.chuc_vu}} - {{item.ngay_sinh | date:'dd/MM/yyyy'}}</p>
+              <p><i [ngClass]="(item.gioi_tinh != 1)?'fas fa-mars':'fas fa-venus'"></i>&nbsp;<b>{{item.ho_ten}}</b> - {{item.chuc_vu}} - {{item.ngay_sinh | date:'dd/MM/yyyy'}}</p>
               <hr>
             </div>
           </div>

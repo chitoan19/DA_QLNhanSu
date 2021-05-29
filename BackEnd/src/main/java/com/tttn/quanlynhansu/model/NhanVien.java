@@ -138,7 +138,7 @@ public class NhanVien {
 		this.cmnd = cmnd;
 	}
 
-	public int isGioi_tinh() {
+	public int getGioi_tinh() {
 		return gioi_tinh;
 	}
 

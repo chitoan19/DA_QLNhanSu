@@ -1,5 +1,5 @@
-<h1 class="card-title text-center py-3 title-list bg-title">Tạo tài khoản</h1>
-
+<h1 class="card-title py-3 title-list bg-title"><i class="fas fa-user-plus"></i>&nbsp;Tạo tài khoản</h1>
+<hr style="margin-top: 0;">
 <form class="form-search" (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col-md-4">
@@ -14,15 +14,14 @@
         <label for="quyen">Quyền</label>
         <select  [(ngModel)]="tk.quyen" #quyen="ngModel" class="custom-select" id="quyen" name="quyen">
           <option value="0">User</option>
-          <option value="1">Admin</option>
-          <option value="2">Super Admin</option>
+          <option *ngIf="this.user.quyen > 1" value="1">Admin</option>
         </select>
       </div>
     </div>
     <div class="col-md-4">
       <div class="form-group">
         <label for="nhanvien">Nhân viên</label>
-        <select  [(ngModel)]="tk.nhan_vien_id" #nhanvien="ngModel" class="custom-select" id="nhanvien" name="nhanvien">
+        <select select2 [(ngModel)]="tk.nhan_vien_id" #nhanvien="ngModel" class="custom-select" id="nhanvien" name="nhanvien">
           <option *ngFor="let item of newListNv"  value="{{item.id}}">{{item.ho_ten}}</option>
         </select>
       </div>

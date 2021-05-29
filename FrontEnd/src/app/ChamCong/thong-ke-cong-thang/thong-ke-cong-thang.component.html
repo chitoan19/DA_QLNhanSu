@@ -1,1 +1,123 @@
-<p>thong-ke-cong-thang works!</p>
+<h1 class="card-title py-3 title-list bg-title"><i class="fas fa-calculator"></i>&nbsp;Thống kê lương tháng</h1>
+<hr style="margin-top: 0;">
+<div class="container border">
+  <br>
+  <form class="form-search" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-md-1">
+        <div class="form-group">
+          <label for="thang">Tháng</label>
+          <input type="number" [(ngModel)]="ccRequest.thang" min="1" max="12"  class="form-control" id="thang" name="thang">
+          <span *ngIf="errThang" class="text-danger"><i>Nhập tháng</i></span>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="nam">Năm</label>
+          <input type="number" [(ngModel)]="ccRequest.nam"  class="form-control" id="nam" name="nam">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <mat-form-field style="font-size: 18px;">
+            <mat-select id="nhan_vien_id" name="nhan_vien_id" [(ngModel)]="ccRequest.nhan_vien_id" placeholder="Nhân viên" #singleSelect (selectionChange)="changeSelect($event)">
+              <mat-option [value]="">Tất cả</mat-option>
+              <mat-option *ngFor="let nv of this.listNhanVien" [value]="nv.id">
+                {{nv.ho_ten}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <span *ngIf="errNV" class="text-danger"><i>Chọn nhân viên</i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+        &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-filter"></i>&nbsp;Lọc</button>
+        &nbsp;&nbsp;<button class="btn btn-outline-primary" (click)="refresh()"><i class="fas fa-redo-alt"></i>&nbsp;</button>
+    </div>
+    <br>
+  </form>
+</div>
+<br>
+<button class="btn btn-warning" (click) = "export()"><i class="fas fa-arrow-circle-right"></i>&nbsp;Export</button>&nbsp;
+<button class="btn btn-success" (click) = "openThongKeDialog(dialog)"><i class="fas fa-calculator"></i>&nbsp;Thống kê lương</button>
+<div class="card ">
+  <div class="card-body list-data">
+    <select id="list-size" name="list-size" *ngIf="this.listLuongThang" (change)="changePageSize($event)">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="">All</option>
+    </select>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">STT</th>
+          <th *ngIf="!this.TinhLuongThangRequest.nhan_vien_id" scope="col">Nhân viên</th>
+          <th scope="col">Thời gian</th>
+          <th scope="col">Số ngày công</th>
+          <th scope="col">Nghỉ</th>
+          <th scope="col">Đi muộn</th>
+          <th scope="col">Làm thêm(giờ)</th>
+          <th scope="col">Khấu trừ</th>
+          <th scope="col">Tổng lương</th>
+        </tr>
+      <tbody>
+        <tr *ngFor="let i=index;let item of listLuongThang | paginate:{itemsPerPage: perPage, currentPage: p, totalItems: total}">
+          <td>{{i+1}}</td>
+          <td *ngIf="!this.TinhLuongThangRequest.nhan_vien_id">{{this.objectNhanVien[item.nhan_vien_id]}}</td>
+          <td>Tháng {{item.thang}}/{{item.nam}}</td>
+          <td>{{item.so_ngay_cong}}</td>
+          <td>{{item.so_ngay_nghi_phep}}</td>
+          <td>{{item.so_ngay_di_muon}}</td>
+          <td>{{item.so_gio_lam_them }}</td>
+          <td>{{item.khau_tru }}</td>
+          <td>{{formatMoney(item.tong_luong)}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<nav aria-label="Page navigation example">
+  <pagination-controls
+  (pageChange)="pageChanged(p = $event)"
+  (pageBoundsCorrection)="pageChanged($event)"
+  previousLabel="Trước"
+  nextLabel="Sau"
+  >
+  </pagination-controls>
+</nav>
+<ng-template #dialog let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title">Thống kê lương tháng</h2>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="col-md-3">
+          Tháng: <input class="form-control" id="thangtk" name="thangtk" placeholder="Tháng" type="number" [(ngModel)]="ccRequest.thang">
+          <span *ngIf="!ccRequest.thang" class="text-danger"><i>Nhập tháng!</i></span><br>
+          <span *ngIf="ccRequest.thang < 1 || ccRequest.thang > 12" class="text-danger"><i>Tháng phải trong khoảng 1 - 12!</i></span>
+        </div>
+        <div class="col-md-3">
+          Năm: <input class="form-control" id="namtk" name="namtk" placeholder="Tháng" type="number" [(ngModel)]="ccRequest.nam">
+          <span *ngIf="!ccRequest.nam" class="text-danger"><i>Nhập năm!</i></span>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <img *ngIf="this.isLoad" width="50px" height="50px" src="./assets/static/images/loading.gif">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-primary" (click) = "thongKeLuong()">Xác nhận</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Hủy</button>
+  </div>
+</ng-template>

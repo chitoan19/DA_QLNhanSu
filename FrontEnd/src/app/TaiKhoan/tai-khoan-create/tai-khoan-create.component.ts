@@ -17,8 +17,11 @@ export class TaiKhoanCreateComponent implements OnInit {
   listTK: any;
   newListNv = new Array();
   tkResponse = new Response<TaiKhoan>();
-  constructor(private router: Router,private nvService: NhanVienService, private notificationService: NotificationsService, private tkService: TaiKhoanService) {
-
+  user: TaiKhoan;
+  constructor(private router: Router,private nvService: NhanVienService,
+    private notificationService: NotificationsService, private tkService: TaiKhoanService) {
+      this.user = new TaiKhoan();
+      this.user = JSON.parse(localStorage.getItem('currentUser'));
    }
 
   ngOnInit(){
